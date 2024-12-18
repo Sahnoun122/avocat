@@ -43,11 +43,7 @@
   </div>
   </div>
 </nav>
-<section class="backroung">
-  <!-- <img src="../img/img1.jpg" id="img1" alt=""> -->
-  <!-- <h1 id="h1">Justice</h1> -->
 
-</section> 
 
 
 <section class="bg-gray-100 h-[750px] flex justify-center px-20 mt-[]">
