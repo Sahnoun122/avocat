@@ -66,18 +66,18 @@
 				<div class="dashboard grid grid-cols-2 md:grid-cols-4 gap-[16rem]">
 					<div class="dashboard-item">
 						<i class="fa fa-users"></i>
-						<span></span>
+						<span>demandes</span>
 					</div>
 					<div class="dashboard-item">
 						<i class="fa fa-tasks"></i>
-						<span></span>
+						<span>approuvées pour la journée <br></span>
 					</div>
 					<div class="dashboard-item">
 						<i class="fa fa-window-close-o"></i>
-						<span></span>
+						<span>approuvées pour le jour suivant <br></span>
 					</div>
 					<div class="dashboard-item">
-						<i class="fa fa-clock-o"></i>
+						<i class="fa fa-clock-o">Détails du prochain client <br></i>
 						<span></span>
 					</div>
 					
