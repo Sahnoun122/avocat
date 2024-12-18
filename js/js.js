@@ -26,37 +26,57 @@ const dueDate = document.getElementById('mindate');
 
       maxdate();
 
-
-
-
-
-
-
-      document.getElementById("myForm").addEventListener("submit", function(event) {
-        const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-        const phonePattern = /^[0-9]{3}-[0-9]{3}-[0-9]{4}$/;
-        const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$/;
     
-        const email = document.getElementById("floating_email").value;
-        const phone = document.getElementById("floating_phone").value;
-        const password = document.getElementById("floating_password").value;
-        const confirmPassword = document.getElementById("floating_repeat_password").value;
-    
-        if (!email.match(emailPattern)) {
-            alert("L'adresse email est invalide.");
-            event.preventDefault();
-        }
-        if (!phone.match(phonePattern)) {
-            alert("Le numéro de téléphone est invalide.");
-            event.preventDefault();
-        }
-        if (!password.match(passwordPattern)) {
-            alert("Le mot de passe doit contenir au moins une lettre majuscule, une lettre minuscule, un chiffre, et faire au moins 8 caractères.");
-            event.preventDefault();
-        }
-        if (password !== confirmPassword) {
-            alert("Les mots de passe ne correspondent pas.");
-            event.preventDefault();
-        }
-    });
-    
+ 
+//      function validation(){
+
+//     const emailInput = document.getElementById('email').value;
+//     const phoneInput = document.getElementById('phone').value;
+//     const passwordInput = document.getElementById('password').value;
+//     const nameInput = document.getElementById('nom').value;
+//     const prenomInput = document.getElementById('prenom').value;
+
+//     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+//     const phoneRegex = /^\+?\d{10,15}$/;
+//     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+//     const nameRegex = /^[a-zA-ZÀ-ÿ]+(?:[-' ]?[a-zA-ZÀ-ÿ]+)*$/;
+
+
+
+//         let valid = true;
+
+//         if (!emailRegex.test(emailInput)) {
+//              document.getElementById('alert-nom').innerHTML = "Le email doit comporter @.";
+//              document.getElementById('alert-nom').className="text-sm text-red-600 font-light"
+//             valid = false;
+//         }
+
+//         if (!phoneRegex.test(phoneInput)) {
+//               document.getElementById('alert-phone').innerHTML = "entre votr numero de telephone.";
+//              document.getElementById('alert-phone').className="text-sm text-red-600 font-light"
+//             valid = false;
+//         }
+
+//         if (!passwordRegex.test(passwordInput)) {
+//               document.getElementById('alert-password').innerHTML = "le mot de paase doit etre fort.";
+//              document.getElementById('alert-password').className="text-sm text-red-600 font-light"
+//             valid = false;
+//         }
+
+//         if (!nameRegex.test(nameInput)) {
+//               document.getElementById('alert-nom').innerHTML = "Le nom doit comporter entre 2 et 50 lettres uniquement.";
+//              document.getElementById('alert-nom').className="text-sm text-red-600 font-light"
+//             valid = false;
+//         }
+//         if (!nameRegex.test(prenomInput)) {
+//             document.getElementById('alert-prenom').innerHTML = "Le prenom doit comporter entre 2 et 50 lettres uniquement.";
+//            document.getElementById('alert-prenom').className="text-sm text-red-600 font-light"
+//              valid = false;
+//       }
+
+//    }
+//    document.getElementById('add-form').addEventListener('submit', function (e) {
+//     if (!validation()) {
+//       e.preventDefault(); 
+//     }
+//   });
