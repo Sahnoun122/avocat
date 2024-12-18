@@ -7,8 +7,6 @@
 </head>
 <body>
     
-
-
 <?php
 $host = 'localhost';
 $user='root';
