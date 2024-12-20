@@ -6,8 +6,12 @@
     <title>connexion</title>
 </head>
 <body>
-    
+
+
+
 <?php
+
+
 $host = 'localhost';
 $user='root';
 $pass='';
@@ -21,6 +25,8 @@ if($conn -> connect_error){
  }
 
 ?>
+
+
 
 </body>
 </html>
