@@ -2,10 +2,11 @@
 
 <?php
     
-    include 'conn.php';
+   
     session_start();
      if(!isset($_SESSION['admin'])){
-          header('location : ../php/connecter.php');
+          header("Location: connecter.php");
+          exit;
      }
 
 ?>

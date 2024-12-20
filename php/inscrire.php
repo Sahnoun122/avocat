@@ -2,42 +2,68 @@
 
 
 <?php
-    include 'conn.php';
-    if(isset($_POST['submit'])){
-        $nom= mysqli_real_escape_string($conn, $_POST['nom']);
-        $prenom= mysqli_real_escape_string($conn, $_POST['prenom']);
-        $role= md5($_POST['role']);
-        $specialite= mysqli_real_escape_string($conn, $_POST['specialite']);
-        $anne_experience= mysqli_real_escape_string($conn, $_POST['anne_experience']);
-        $biographie= mysqli_real_escape_string($conn, $_POST['biographie']);
-        $email= mysqli_real_escape_string($conn, $_POST['email']);
-        $password= md5($_POST['password'] );
-        $cpassword= md5($_POST['cpassword'] );
+include '../conn.php';
 
-        $phone= mysqli_real_escape_string($conn, $_POST['phone']);
+if (isset($_POST['submit'])) {
+    $nom = $_POST['nom'];
+    $prenom = $_POST['prenom'];
+    $role = $_POST['role'];
+    $specialite = $_POST['specialite'];
+    $anne_experience = $_POST['anne_experience'];
+    $biographie = $_POST['biographie'];
+    $email = $_POST['email'];
+    $password = $_POST['passworrd'];
+    $cpassword = $_POST['cpassworrd'];
+    $phone = $_POST['phone'];
 
+    if ($password != $cpassword) {
+        // $error[] = 'Les mots de passe ne correspondent pas.';
+        echo "Password Unmatched !";
+    } else {
+        echo "Password Matched !";
+        $select = "SELECT * FROM useer WHERE email = '$email'";
+        $result = mysqli_query($conn, $select);
 
-         $select= "SELECT * FROM useer WHERE email = '$email' &&  passworrd = '$password'";
-        $result= mysqli_query($conn, $select);
-        if(mysqli_num_rows($result)>0){
-         $error[]='utilisateur deja excicte';
-        }else{
-               if($password != $cpassword){
-                $error[] ='mot de passe pas correcte';
+        if (mysqli_num_rows($result) > 0) {
+            $error[] = 'Utilisateur déjà existant';
+        } else {
+            if ($role == "Client") {
+                $insert = "INSERT INTO useer (nom, prenom, role, email, passworrd, telephone, cpassworrd) VALUES ('$nom', '$prenom', '$role', '$email', '$password', '$phone', '$password')";
 
-               }else{
-                $insert= "INSERT INTO useer(nom ,prenom ,email  ,telephone, passworrd ,specialites , annes_exp , biographie ,role)
-                 values('$nom' , '$prenom', '$role' , '$specialite' , '$anne_experience' ,'$biographie' , '$email' , '$password' , '$cpassword' , '$phone') ";
-                 mysqli_query($conn, $insert);
-                 header('location :../php/connecter.php ');
+                if (mysqli_query($conn, $insert)) {
+                    header('Location: connecter.php');
+                    exit;
+                } else {
+                    echo "L'insertion dans la base de données a échoué Client.";
+                }
+            } else if ($role == "Avocat") {
 
-               }
+                $admin = 'admin';
+                
+                $insert = "INSERT INTO useer (nom, prenom, role, email, passworrd, telephone, cpassworrd) VALUES ('$nom', '$prenom', '$admin', '$email', '$password', '$phone', '$password')";
 
-        }    
-    
-    };
+                if (mysqli_query($conn, $insert)) {
+                    $user_id = mysqli_insert_id($conn); 
+                    $insert1 = "INSERT INTO avocat (specialites, annes_exp, biograghie, id) VALUES ('$specialite', '$anne_experience', '$biographie', '$user_id')";
 
+                    if (mysqli_query($conn, $insert1)) {
+                        header('Location: connecter.php');
+                        exit;
+                    } else {
+                        echo mysqli_error($conn);
+                        // echo "L'insertion dans la table avocat a échoué Avocat.";
+                    }
+                } else {
+                    echo mysqli_error($conn);
+                }
+            } else {
+                $error[] = "Rôle invalide.";
+            }
+        }
+    }
+}
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -57,7 +83,7 @@
 
 
 
-    <form class="max-w-md mx-auto mt-10" id="add-form" method="$_POST" action="">
+    <form class="max-w-md mx-auto mt-10" id="add-form" method="POST" action="">
         <?php
         if(isset($error)){
             foreach($error as $error){
@@ -121,12 +147,20 @@
         </div>
 
         <div class="relative z-0 w-full mb-5 group">
-            <input type="password" name="password" id="password" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
+            <input type="password" name="passworrd" id="password" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
             <label for="floating_repeat_password" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">mot de passe</label>
             <span id="alert-password"></span>
 
         </div>
 
+
+        
+        <div class="relative z-0 w-full mb-5 group">
+            <input type="password" name="cpassworrd" id="password" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
+            <label for="floating_repeat_password" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"> confirme mot de passe </label>
+            <span id="alert-password"></span>
+
+        </div>
         <div class="grid md:grid-cols-2 md:gap-6">
             <div class="relative z-0 w-full mb-5 group">
                 <input type="tel" name="phone" id="phone" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
@@ -136,13 +170,13 @@
             </div>
 
         </div>
-        <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
+        <button type="submit" name="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
     </form>
 
 
 
 
-    <script>
+    <!-- <script>
         function validation() {
 
             const emailInput = document.getElementById('email').value;
@@ -195,7 +229,7 @@
                 e.preventDefault();
             }
         });
-    </script>
+    </script> -->
 
 
 

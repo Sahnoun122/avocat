@@ -1,11 +1,10 @@
 <?php
-    
-    include 'conn.php';
+    @include 'conn.php';
     session_start();
      if(!isset($_SESSION['client'])){
-          header('location : ../php/connecter.php');
+          header("Location: connecter.php");
+          exit;
      }
-
 ?>
 
 <!DOCTYPE html>
