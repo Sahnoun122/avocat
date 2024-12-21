@@ -9,7 +9,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    
+
     $select = "SELECT * FROM useer WHERE email = ?";
     $stmt = mysqli_prepare($conn, $select);
     mysqli_stmt_bind_param($stmt, "s", $email);  
@@ -35,11 +35,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             if ($_SESSION['role'] == 'client') {
                 echo "client !";
-                header('Location: ./client.php');
+                header('Location: client.php');
                 exit;
             } else {
                 echo "avocat !";
-                header('Location: ./avocat.php');
+                header('Location: avocat.php');
                 exit;
             }
         } else {
@@ -50,11 +50,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 ?>
-
-
-
-
-
 
 
 
